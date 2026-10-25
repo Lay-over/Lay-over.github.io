@@ -1,4 +1,4 @@
-# 小栈笔记 —— Hugo 纯中文博客
+# Layover —— Hugo 纯中文博客
 
 基于 [Hugo](https://gohugo.io) 静态网站生成器与 [neopost](https://github.com/salatine/neopost) 主题搭建的个人博客，全站内容为简体中文。
 
