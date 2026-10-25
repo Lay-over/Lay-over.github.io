@@ -4,6 +4,10 @@ locale: 'zh-cn'
 titleCaseStyle: 'none' # 不强制把标题转为大写
 theme: "neopost"
 
+# 忽略仓库根目录的说明文件，避免 README.md 被 Hugo 当成首页内容渲染
+ignoreFiles:
+  - 'README\.md$'
+
 # 纯中文单语站点：只保留中文，删除主题示例自带的英语(en)、日语(jp)
 languages:
   zh:
