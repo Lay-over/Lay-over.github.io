@@ -1,0 +1,36 @@
+title: "Layover"
+baseURL: '/'
+locale: 'zh-cn'
+titleCaseStyle: 'none' # 不强制把标题转为大写
+theme: "neopost"
+
+# 纯中文单语站点：只保留中文，删除主题示例自带的英语(en)、日语(jp)
+languages:
+  zh:
+    locale: zh-cn
+    contentDir: content/zh
+    label: 中文
+    weight: 1
+    params:
+      sidebar:
+        tags:
+          enable: true
+          limit: 5 # 侧边栏最多展示的标签数量
+          more-text: "更多标签..."
+
+      read-more:
+        length-limit: 120 # 正文摘要超过该字数时显示“阅读全文”按钮
+        text:
+          more: "阅读全文"
+          less: "收起"
+
+permalinks:
+  posts: "/posts/:filename/"
+
+params:
+  # 主题内置配色：light-blue、dark-blue、light-green、light-yellow、light-pink、light-purple
+  # 也可以在 /data/custom_themes.yaml 中自定义配色（本站使用自定义的 meow 配色）
+  theme: "meow"
+  favicon: "/icon.png"
+  posts-per-page: 5 # 每页显示的文章数量
+  toc-auto-numbering: false

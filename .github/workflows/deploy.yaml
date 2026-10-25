@@ -1,0 +1,70 @@
+# GitHub Pages 自动部署工作流
+# 使用方法：
+# 1. 把整个博客文件夹（不含 public、resources、hugo.exe）推送到 GitHub 仓库的 main 分支；
+# 2. 仓库 Settings → Pages → Build and deployment → Source 选择 "GitHub Actions"；
+# 3. 之后每次 push 源码，GitHub 会自动执行 hugo 构建并部署，无需手动上传 public 目录。
+#
+# 说明：若仓库名为 “用户名.github.io”，站点地址为 https://用户名.github.io/，无需修改；
+#      若为其他仓库名（项目站点），地址为 https://用户名.github.io/仓库名/，
+#      下面的 --baseURL 会自动注入正确地址。
+
+name: 部署 Hugo 博客到 GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # 允许在 Actions 页面手动触发
+
+# 赋予 GITHUB_TOKEN 部署 Pages 所需的权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同一时间只允许一个部署任务，避免并发冲突
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: 0.168.0
+    steps:
+      - name: 安装 Hugo（extended 版本）
+        run: |
+          wget -O ${{ runner.temp }}/hugo.deb \
+            https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+
+      - name: 检出源代码
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: 配置 GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: 构建静态站点
+        env:
+          HUGO_ENVIRONMENT: production
+        run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+
+      - name: 上传构建产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

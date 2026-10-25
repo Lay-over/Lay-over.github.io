@@ -1,0 +1,12 @@
+{{ define "main" }}
+<article style="padding-left: 2rem;">
+    <h2>标签</h2>
+    <ul>
+    {{ range .Pages }}
+    <li style="margin-bottom: .5rem;">
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+    </li>
+    {{ end }}
+    </ul>
+</article>
+{{ end }}

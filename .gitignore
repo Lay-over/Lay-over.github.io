@@ -1,0 +1,12 @@
+# Hugo 构建产物（由 hugo 命令自动生成，无需提交）
+public/
+resources/
+.hugo_build.lock
+
+# Hugo 可执行文件（本地使用，无需提交）
+hugo.exe
+
+# 系统与编辑器杂项
+.DS_Store
+Thumbs.db
+*.log
