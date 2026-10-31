@@ -38,7 +38,7 @@ name = "  layover  "
 print("去除首尾空格：", name.strip())
 print("转大写：", name.strip().upper())
 
-age = 20
+age = 18
 intro = f"我今年 {age} 岁，学习 Python 第 1 天"
 print(intro)
 
